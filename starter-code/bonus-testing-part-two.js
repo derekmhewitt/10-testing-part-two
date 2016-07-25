@@ -49,8 +49,10 @@ expect(
 
   // number of times the new caretaker fed the lion. one array entry per day
 var mealsPerDay = [5, 4, 3, 6, 2, 4, 3, 4, 5, 1];
-var tooHungryDay;
-
+var tooHungryDay = 0;
+var avgMealsPerDay = 0;
+var totalLionMeals = 0;
+var daysPassed = 1;
   /*
    TODO:
    Cycle through the days in mealsPerDay. At each day, print out the average
@@ -59,6 +61,20 @@ var tooHungryDay;
    pondering protein supplements (the first day the average dips below 4
    meals)
   */
+
+mealsPerDay.forEach(function(current) {
+  console.log(current, 'current');
+  console.log(totalLionMeals, 'total lion meals so far');
+  avgMealsPerDay = (totalLionMeals += current)/daysPassed;
+  console.log(daysPassed, 'days passed');
+  console.log(avgMealsPerDay, 'avg meals');
+  daysPassed++;
+  if(avgMealsPerDay < 4) {
+    tooHungryDay = daysPassed;
+    console.log('lion too hungry');
+    return tooHungryDay;
+  }
+});
 
 
 expect(
@@ -70,3 +86,11 @@ expect(
   // Write a second test expecting that tooHungryDay falls within an acceptable answer
   // based on the number of days available in the array. Remember to:
   // pass in your expression, and write a failure and a success message.
+
+expect(
+  //we deine an 'acceptable answer' for tooHungryDay as being shorter or longer than the mealsPerDay array.  Since our daysPassed variable has to start at 1 (so we don't divide by zero) our acceptable range is 2-11
+  // tooHungryDay < 2 && tooHungryDay > 11,
+  false,
+  tooHungryDay + ' is too large or too small - failure',
+  tooHungryDay + ' is within the acceptable spread - success'
+  );
